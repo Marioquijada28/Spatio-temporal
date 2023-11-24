@@ -1,17 +1,18 @@
 #Weekly Epidemiological Record
+
 library(tidyverse)
 library(ggplot2)
 
 library(readxl)
-Df <- read_excel("")
-View(Df)
+df <- read_excel("")
+View(df)
 
 names <- c('WEEKLY' ,'year')
-Df[,names] <- lapply(Df[,names] , factor) 
-str(Df)
+df[,names] <- lapply(df[,names] , factor) 
+str(df)
 
-attach(DENV)
-names(DENV)
+attach(df)
+names(df)
 
 #Option 1
 Test <- ggplot(Df, aes(WEEKLY,fill=year))
@@ -23,17 +24,17 @@ Test+geom_bar()+
   theme(text = element_text(size = 24))
 
 
-#Option 2 Assuming DENV has columns named "Weekly", "Year", and "Cases"
+#Option 2 Assuming df has columns named "Weekly", "Year", and "Cases"
 df <- df %>%
   group_by(year, WEEKLY) %>%
   summarise(Cases = n())
 
-attach(Df)
-names(Df) 
+attach(df)
+names(df) 
 
-Df$WEEKLY <- as.numeric(as.character(Df$WEEKLY))
+df$WEEKLY <- as.numeric(as.character(Df$WEEKLY))
 
-ggplot(Df, aes(x = WEEKLY, y = Cases, color = as.factor(year))) +
+ggplot(df, aes(x = WEEKLY, y = Cases, color = as.factor(year))) +
   geom_line() +
   labs(title = "Cases Over Weeks", x = "Weekly", y = "Cases") +
   theme(axis.title=element_text(size=24,face="bold"))+
