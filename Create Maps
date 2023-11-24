@@ -7,21 +7,21 @@ library(ggplot2)
 library(tidyr)
 library(viridisLite)
 
-setwd("~/Desktop/Curso de Mapas/Corregimientos")
-shp <- st_read("Corregimientos_of_Panama.shp")
+setwd()
+shp <- st_read()
 
 library(readxl)
-Tabla <- read_excel("~/Desktop/Curso de Mapas/Data/CursoDeMapasExcel.xlsx")
-View(Tabla)
+Tabla <- read_excel()
+View(Table)
 
 shp %>%
   ggplot() +
   geom_sf()
 
 aggregated_tbl <- Tabla %>%
-  count(Corregimie)
+  count(variable)
 
-pan_map_infl <- left_join(shp, aggregated_tbl, by = c("CORREGIMIE" = "Corregimie"))
+df <- left_join(shp, aggregated_tbl, by = c(variable" = "variable"))
 
 pan_map_infl %>%
   ggplot() +
@@ -30,6 +30,6 @@ pan_map_infl %>%
   theme_bw() +
   xlab("Longitude") +
   ylab("Latitude") +
-  labs(title = "Distribucion de Casos de Tuberculosis",
+  labs(title = "Cases",
        subtitle = "2022",
        fill = "Numbers of Cases")
