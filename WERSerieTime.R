@@ -1,19 +1,20 @@
+#Weekly Epidemiological Record
 library(tidyverse)
 library(ggplot2)
 
 library(readxl)
-DENV <- read_excel("Desktop/Arbovirus/Data/Arbovirus/DENV/In process data/DENV.xlsx")
-View(DENV)
+Df <- read_excel("")
+View(Df)
 
 names <- c('WEEKLY' ,'year')
-DENV[,names] <- lapply(DENV[,names] , factor) 
-str(DENV)
+Df[,names] <- lapply(Df[,names] , factor) 
+str(Df)
 
 attach(DENV)
 names(DENV)
 
 #Option 1
-Test <- ggplot(DENV, aes(WEEKLY,fill=year))
+Test <- ggplot(Df, aes(WEEKLY,fill=year))
 Test+geom_bar()+
   labs(y="Cases", x="Weekly Epidemiological Record")+
   theme(axis.title=element_text(size=24,face="bold"))+
@@ -23,18 +24,18 @@ Test+geom_bar()+
 
 
 #Option 2 Assuming DENV has columns named "Weekly", "Year", and "Cases"
-DENV1 <- DENV %>%
+df <- df %>%
   group_by(year, WEEKLY) %>%
   summarise(Cases = n())
 
-attach(DENV1)
-names(DENV1) 
+attach(Df)
+names(Df) 
 
-DENV1$WEEKLY <- as.numeric(as.character(DENV1$WEEKLY))
+Df$WEEKLY <- as.numeric(as.character(Df$WEEKLY))
 
-ggplot(DENV1, aes(x = WEEKLY, y = Cases, color = as.factor(year))) +
+ggplot(Df, aes(x = WEEKLY, y = Cases, color = as.factor(year))) +
   geom_line() +
-  labs(title = "Dengue Cases Over Weeks", x = "Weekly", y = "Cases") +
+  labs(title = "Cases Over Weeks", x = "Weekly", y = "Cases") +
   theme(axis.title=element_text(size=24,face="bold"))+
   theme(axis.text.x = element_text(size = 25, angle = 90, vjust = 1.5, hjust = 1)) +
   theme(axis.text.y = element_text(size = 25, vjust = 1, hjust = 1)) +
